@@ -1,0 +1,117 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #ff8fb3, #ff5f9e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #fff;
+}
+
+.card {
+  width: 92%;
+  max-width: 380px;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(14px);
+  border-radius: 28px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+  overflow: hidden;
+  animation: fadeUp 1s ease;
+}
+
+.card.yay {
+  animation: popIn 0.9s ease;
+}
+
+.card-video {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.content {
+  padding: 20px;
+  text-align: center;
+}
+
+.love-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.95;
+  margin-bottom: 14px;
+}
+
+h2 {
+  font-size: 1.35rem;
+  margin-bottom: 18px;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  position: relative;
+}
+
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+#yesBtn {
+  background: linear-gradient(135deg, #ff4d8d, #ff85b3);
+  color: white;
+  box-shadow: 0 0 25px rgba(255,77,141,0.6);
+  animation: pulse 1.4s infinite;
+}
+
+#noBtn {
+  background: rgba(255,255,255,0.9);
+  color: #333;
+  position: relative;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Floating hearts */
+#hearts span {
+  position: fixed;
+  bottom: -20px;
+  font-size: 18px;
+  animation: floatUp 5s linear infinite;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-110vh); opacity: 0; }
+}
