@@ -1,8 +1,7 @@
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const question = document.getElementById("question");
-// Make sure your card has this ID in the HTML
-const card = document.querySelector(".card"); 
+const container = document.querySelector(".buttons"); // Move inside this div
 
 const sadSound = document.getElementById("sadSound");
 const cheerSound = document.getElementById("cheerSound");
@@ -19,56 +18,55 @@ const questions = [
 ];
 
 noBtn.addEventListener("click", () => {
-  sadSound.currentTime = 0;
-  sadSound.play();
+  // Play sound
+  if(sadSound) {
+    sadSound.currentTime = 0;
+    sadSound.play();
+  }
 
-  // 1. Get Card dimensions
-  const rect = card.getBoundingClientRect();
-  
-  // 2. Calculate max positions (Card width - Button width)
-  const maxX = rect.width - noBtn.offsetWidth;
-  const maxY = rect.height - noBtn.offsetHeight;
+  // 1. Get boundaries of the .buttons container
+  const containerRect = container.getBoundingClientRect();
+  const btnWidth = noBtn.offsetWidth;
+  const btnHeight = noBtn.offsetHeight;
 
-  // 3. Generate random coordinates within the card
-  const x = Math.floor(Math.random() * maxX);
-  const y = Math.floor(Math.random() * maxY);
+  // 2. Calculate random position within container bounds
+  // We subtract button size so it doesn't bleed over the edge
+  const maxX = containerRect.width - btnWidth;
+  const maxY = containerRect.height - btnHeight;
 
-  // 4. Apply styles
-  // Ensure the .card in CSS has 'position: relative'
-  noBtn.style.position = "absolute"; 
-  noBtn.style.left = `${x}px`;
-  noBtn.style.top = `${y}px`;
+  const randomX = Math.floor(Math.random() * maxX);
+  const randomY = Math.floor(Math.random() * maxY);
+
+  // 3. Move the No Button
+  noBtn.style.left = `${randomX}px`;
+  noBtn.style.top = `${randomY}px`;
   noBtn.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
 
-  // 5. Grow YES button
-  yesScale += 0.3; // Increased growth rate slightly
-  yesBtn.style.transform = `scale(${yesScale})`;
-  // Important: ensures the Yes button grows from its center
-  yesBtn.style.transformOrigin = "center"; 
+  // 4. Grow YES button using the CSS Variable
+  yesScale += 0.4; 
+  yesBtn.style.setProperty('--s', yesScale);
 
-  // 6. Update text
+  // 5. Change text
   qIndex = (qIndex + 1) % questions.length;
   question.textContent = questions[qIndex];
 });
 
 yesBtn.addEventListener("click", () => {
-  cheerSound.currentTime = 0;
-  cheerSound.play();
+  if(cheerSound) {
+    cheerSound.currentTime = 0;
+    cheerSound.play();
+  }
   setTimeout(() => {
     window.location.href = "yay.html";
   }, 400);
 });
 
-// Floating hearts (optimized)
+// Floating hearts
 setInterval(() => {
   const heart = document.createElement("span");
-  heart.className = "floating-heart"; // Better to use a class for styling
   heart.textContent = "💖";
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.position = "fixed";
-  heart.style.bottom = "-20px";
   heart.style.fontSize = Math.random() * 10 + 16 + "px";
   document.body.appendChild(heart);
-
   setTimeout(() => heart.remove(), 5000);
 }, 600);
