@@ -22,76 +22,77 @@ body {
   backdrop-filter: blur(14px);
   border-radius: 28px;
   box-shadow: 0 25px 60px rgba(0,0,0,0.35);
-  overflow: hidden; 
+  overflow: hidden; /* Keeps button from popping outside rounded corners */
   animation: fadeUp 1s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .card-video {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
 }
 
 .content {
-  padding: 30px 20px;
+  padding: 24px;
   text-align: center;
-  position: relative; /* Boundary for the No button */
-  min-height: 320px;  /* Essential space for the chase */
+  position: relative; /* CRITICAL: Acts as the boundary for the No button */
+  min-height: 250px;  /* Gives the No button space to jump around */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.love-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.95;
+  margin-bottom: 14px;
+}
+
 h2 {
-  font-size: 1.4rem;
-  margin-bottom: 20px;
-  min-height: 3em;
+  font-size: 1.35rem;
+  margin-bottom: 18px;
+  min-height: 3.5rem; /* Prevents layout jump when text changes */
 }
 
 .buttons {
-  width: 100%;
-  height: 150px; /* Play area */
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 14px;
+  width: 100%;
+  height: 100px; /* Reference area for button movement */
+  position: relative;
 }
 
 button {
   border: none;
   border-radius: 999px;
-  padding: 12px 24px;
+  padding: 12px 22px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 #yesBtn {
   background: linear-gradient(135deg, #ff4d8d, #ff85b3);
   color: white;
-  box-shadow: 0 10px 25px rgba(255,77,141,0.5);
-  z-index: 100;
-  /* We use a variable --s to grow while pulsing */
-  --s: 1; 
-  transform: scale(var(--s));
-  animation: dynamicPulse 1.5s infinite ease-in-out;
+  box-shadow: 0 8px 20px rgba(255,77,141,0.4);
+  z-index: 10; /* Keeps Yes button on top of No button */
+  white-space: nowrap;
 }
 
 #noBtn {
   background: rgba(255,255,255,0.9);
   color: #333;
-  position: absolute;
-  z-index: 10;
+  position: absolute; /* Changed from relative to absolute for JS control */
+  white-space: nowrap;
   transition: left 0.2s ease, top 0.2s ease, transform 0.2s ease;
 }
 
-@keyframes dynamicPulse {
-  0% { transform: scale(var(--s)); }
-  50% { transform: scale(calc(var(--s) * 1.1)); }
-  100% { transform: scale(var(--s)); }
-}
-
+/* Animations */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
