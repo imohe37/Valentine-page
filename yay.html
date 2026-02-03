@@ -19,7 +19,6 @@
       <p>
         hmmmmm 🤔<br>
         I thought you were going to say no 😏
-      
       </p>
     </div>
 
@@ -27,5 +26,32 @@
 
   <div id="hearts"></div>
 
+  <!-- Play cheer sound on this page (background). -->
+  <audio id="cheerSound" src="assets/sound-cheer.mp3" preload="auto"></audio>
+
+  <script>
+    // Try to play the cheer sound when the page loads.
+    // The navigation stems from a user click, so browsers should allow playback.
+    window.addEventListener('DOMContentLoaded', () => {
+      const cheer = document.getElementById('cheerSound');
+      if (cheer) {
+        cheer.loop = true;
+        cheer.play().catch(() => {
+          // ignore errors (autoplay restrictions); sound already played on index when YES was clicked
+        });
+      }
+
+      // Recreate the floating hearts from script.js so yay page also has them
+      setInterval(() => {
+        const heart = document.createElement("span");
+        heart.textContent = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 10 + 16 + "px";
+        document.getElementById("hearts").appendChild(heart);
+
+        setTimeout(() => heart.remove(), 5000);
+      }, 600);
+    });
+  </script>
 </body>
 </html>
